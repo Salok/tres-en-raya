@@ -160,12 +160,8 @@ int main() {
 		//y la guarda atendiendo al formata en que se escribe en las variables
 
 		//En este bucle se entra si la casilla elegida esta ocupada y no se sale de el hasta que se proporcione una casilla vacia
-		while(tablero[x][y] != Vacio) {
-			puts("Esas coordenadas estan ocupadas");
-			scanf("%i %i", &x, &y);
-		}
 
-		while(x < 0 || x > 2 || y < 0 || y > 2)
+		while((x < 0 || x > 2 || y < 0 || y > 2) || tablero[x][y] != Vacio))
 		{
 			puts("Esas coordenadas no son validas");
 			scanf("%i %i", &x, &y);
