@@ -38,17 +38,24 @@ void imprimir() {
 
 	int x, y;
 	ficha f;
+	puts("|0|1|2|");
+	puts("---------");
 	for(x = 0; x < 3; ++x) {
+		putchar('|');
 		for(y = 0; y < 3; ++y) {
 			//Estos bucles mueven x e y por todas las coordenadas de la matriz
 			f = tablero[x][y];
 			//f es la ficha en cada coordenada
 			putchar(simbolo_ficha[f]);
+			putchar('|');
 			//putchar sirve para imprimir un solo caracter en pantalla
 		}
+		printf(" %i", x);
 		putchar('\n');
+		puts("---------");
 		//el caracter '\n' significa salto de linea
 	}
+
 }
 
 int min() {
