@@ -214,7 +214,7 @@ ficha ganador()
 	//Comprobamos diagonal izquierda
 	if (tablero[0][0] == tablero[1][1] && tablero[1][1] == tablero[2][2])
 	{
-		if (tablero[1][1] != 0)
+		if (tablero[1][1] != Vacio)
 			return tablero[1][1];
 		else
 			return No_terminado;
@@ -223,7 +223,7 @@ ficha ganador()
 	//Comprobamos diagonal derecha
 	if (tablero[2][0] == tablero[1][1] && tablero[1][1] == tablero[0][2])
 	{
-		if (tablero[1][1] != 0)
+		if (tablero[1][1] != Vacio)
 			return tablero[1][1];
 		else
 			return No_terminado;
@@ -233,7 +233,7 @@ ficha ganador()
 	{
 		if (tablero[i][0] == tablero[i][1] && tablero[i][1] == tablero[i][2])
 		{
-			if (tablero[i][1] != 0)
+			if (tablero[i][1] != Vacio)
 				return tablero[i][1];
 		}
 
@@ -244,7 +244,7 @@ ficha ganador()
 	{
 		if (tablero[0][i] == tablero[1][i] && tablero[1][i] == tablero[2][i])
 		{
-			if (tablero[1][i] != 0)
+			if (tablero[1][i] != Vacio)
 				return tablero[1][i];
 		}
 
@@ -258,5 +258,5 @@ ficha ganador()
 				return No_terminado;
 	}
 
-	return Vacio;
+	return Vacio; //Significa empate
 }
