@@ -4,7 +4,7 @@ enum ficha {
 	Vacio = 0,
 	X = 1,
 	O = 2
-}
+};
 //Esto de arriba es una enumeración lo que hace se crear un nuevo tipo de dato(como int, float, etc)
 //pero que los valores que contiene son los de dentro de las llaves
 //Internamente es un int y cada valor tiene un entero asociado
@@ -14,9 +14,9 @@ ficha tablero[3][3];
 //Esto es una matriz de 3x3 de variables del tipo ficha
 
 enum jugador {
-	Humano,
-	Maquina
-}
+	Humano = 0,
+	Maquina = 1
+};
 //Otro enum para representar a uno de los jugadores
 
 jugador turno;
