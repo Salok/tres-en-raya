@@ -41,8 +41,93 @@ void imprimir() {
 	}
 }
 
-void pensar() {
+int min() {
+	estado e = ganador();
+	switch(e) {
+		case X:
+			return -1;
+		case O:
+			return 1;
+		case Empate:
+			return 0;
+	}
 
+	int worst_val = 2;
+
+	int x, y, val;
+	for(x = 0; x < 3; ++x) {
+		for(y = 0; y < 3; ++y) {
+			if(tablero[x][y] == Vacio) {
+				tablero[x][y] = O;
+
+				val = max();
+				if(val < worst_val) {
+					worst_val = val;
+				}
+
+				tablero[x][y] = Vacio;
+			}
+		}
+	}
+
+	return worst_val;
+}
+
+int max() {
+	estado e = ganador();
+	switch(e) {
+		case X:
+			return -1;
+		case O:
+			return 1;
+		case Empate:
+			return 0;
+	}
+
+	int best_val = -2;
+
+	int x, y, val;
+	for(x = 0; x < 3; ++x) {
+		for(y = 0; y < 3; ++y) {
+			if(tablero[x][y] == Vacio) {
+				tablero[x][y] = O;
+
+				val = min();
+				if(val > best_val) {
+					best_val = val;
+				}
+
+				tablero[x][y] = Vacio;
+			}
+		}
+	}
+
+	return best_val;
+}
+
+void pensar() {
+	int best_val = -2;
+	int best_x, best_y;
+
+	int x, y, val;
+	for(x = 0; x < 3; ++x) {
+		for(y = 0; y < 3; ++y) {
+			if(tablero[x][y] == Vacio) {
+				tablero[x][y] = O;
+
+				val = min();
+				if(val > best_val) {
+					best_val = val;
+					best_x = x;
+					best_y = y;
+				}
+
+				tablero[x][y] = Vacio;
+			}
+		}
+	}
+
+	tablero[best_x][best_y] = O;
 }
 
 int main() {
@@ -58,7 +143,7 @@ int main() {
 	imprimir();
 
 	//El siguiente bucle continua mientras la partida no este terminada
-	while(ganador() == Pendiente) {
+	while(ganador() == No_terminado) {
 		imprimir();
 		puts("Le toca a usted. Escriba coordenadas [x y]");
 		scanf("%i %i\n", &x, &y);
@@ -74,7 +159,7 @@ int main() {
 		tablero[x][y] = X;	//Colocamos ficha
 
 		//Si con este movimiento se termina la partida nos salimos del bucle
-		if(ganador() != Pendiente) {
+		if(ganador() != No_terminado) {
 			break;
 		}
 		
