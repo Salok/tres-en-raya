@@ -41,6 +41,10 @@ void imprimir() {
 	}
 }
 
+void pensar() {
+
+}
+
 int main() {
 	//A continuación vaciamos el tablero
 	int x, y;
@@ -51,6 +55,46 @@ int main() {
 	}
 
 	imprimir();
+
+	while(ganador() == Pendiente) {
+		imprimir();
+		puts("Le toca a usted. Escriba coordenadas [x y]");
+		scanf("%i %i\n", &x, &y);
+		while(tablero[x][y] != Vacio) {
+			puts("Esas coordenadas estan ocupadas");
+			scanf("%i %i\n", &x, &y);
+		}
+		tablero[x][y] = X;
+		
+		imprimir();
+		puts("Le toca a la máquina");
+
+		pensar();
+	}
+
+	jugador g = ganador();
+
+	switch(g) {
+		case Empate: 
+			puts('-------------');
+			puts('Nadie gana!!!');
+			puts('-------------');
+			break;
+		case X:
+			puts('------------');
+			puts('Enhorabuena!');
+			puts('------------');
+			break;
+		case O:
+			puts('------------');
+			puts('EXTERMINATE!');
+			puts('------------');
+			break;
+		default:
+			puts('------------');
+			puts('WTF!!!!!!!!!');
+			puts('------------');
+	}
 
 	return 0;
 }
