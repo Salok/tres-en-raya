@@ -50,6 +50,10 @@ void imprimir() {
 	}
 }
 
+void pensar() {
+
+}
+
 int main() {
 	//A continuación vaciamos el tablero
 	int x, y;
@@ -59,7 +63,59 @@ int main() {
 		}
 	}
 
+	puts("Tres en Raya");
 	imprimir();
+
+	//El siguiente bucle continua mientras la partida no este terminada
+	while(ganador() == Pendiente) {
+		imprimir();
+		puts("Le toca a usted. Escriba coordenadas [x y]");
+		scanf("%i %i\n", &x, &y);
+		//scanf toma la entrada escrita
+		//y la guarda atendiendo al formata en que se escribe en las variables
+
+		//En este bucle se entra si la casilla elegida esta ocupada y no se sale de el hasta que se proporcione una casilla vacia
+		while(tablero[x][y] != Vacio) {
+			puts("Esas coordenadas estan ocupadas");
+			scanf("%i %i\n", &x, &y);
+		}
+
+		tablero[x][y] = X;	//Colocamos ficha
+
+		//Si con este movimiento se termina la partida nos salimos del bucle
+		if(ganador() != Pendiente) {
+			break;
+		}
+		
+		imprimir();
+		puts("Le toca a la máquina");
+
+		pensar(); //La maquina coloca
+	}
+
+	jugador g = ganador();
+
+	switch(g) {
+		case Empate: 
+			puts('-------------');
+			puts('Nadie gana!!!');
+			puts('-------------');
+			break;
+		case X:
+			puts('------------');
+			puts('Enhorabuena!');
+			puts('------------');
+			break;
+		case O:
+			puts('------------');
+			puts('EXTERMINATE!');
+			puts('------------');
+			break;
+		default:
+			puts('------------');
+			puts('WTF!!!!!!!!!');
+			puts('------------');
+	}
 
 	return 0;
 }
