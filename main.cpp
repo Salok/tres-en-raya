@@ -165,6 +165,13 @@ int main() {
 			scanf("%i %i", &x, &y);
 		}
 
+		while(x < 0 || x > 2 || y < 0 || y > 2)
+		{
+			puts("Esas coordenadas no son validas");
+			scanf("%i %i", &x, &y);
+		}
+
+
 		tablero[x][y] = X;	//Colocamos ficha
 
 		//Si con este movimiento se termina la partida nos salimos del bucle
