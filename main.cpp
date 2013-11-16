@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 enum ficha {
+	No_terminado = -1,
 	Vacio = 0,
 	X = 1,
 	O = 2
@@ -11,24 +12,24 @@ enum ficha {
 //Internamente es un int y cada valor tiene un entero asociado
 //En este caso creamos un tipo ficha que puede ser Vacio, X ó O
 
+/*
 enum estado {
-	No_terminado = -1,
 	Empate = 0,
 	X = 1,
 	O = 2
 };
 //Otra enum para que nos devuelva el estado de la partida.
+*/
 
 ficha tablero[3][3];
 //Esto es una matriz de 3x3 de variables del tipo ficha
 
-enum jugador {
-	Humano = 0,
-	Maquina = 1
-};
-//Otro enum para representar a uno de los jugadores
-
-jugador turno;
+void imprimir();
+int min();
+int max();
+void pensar();
+int main();
+ficha ganador();
 
 //Esta función imprime el tablero por pantalla
 void imprimir() {
@@ -51,13 +52,13 @@ void imprimir() {
 }
 
 int min() {
-	estado e = ganador();
+	ficha e = ganador();
 	switch(e) {
 		case X:
 			return -1;
 		case O:
 			return 1;
-		case Empate:
+		case Vacio:
 			return 0;
 	}
 
@@ -67,7 +68,7 @@ int min() {
 	for(x = 0; x < 3; ++x) {
 		for(y = 0; y < 3; ++y) {
 			if(tablero[x][y] == Vacio) {
-				tablero[x][y] = O;
+				tablero[x][y] = X;
 
 				val = max();
 				if(val < worst_val) {
@@ -83,13 +84,13 @@ int min() {
 }
 
 int max() {
-	estado e = ganador();
+	ficha e = ganador();
 	switch(e) {
 		case X:
 			return -1;
 		case O:
 			return 1;
-		case Empate:
+		case Vacio:
 			return 0;
 	}
 
@@ -149,20 +150,19 @@ int main() {
 	}
 
 	puts("Tres en Raya");
-	imprimir();
 
 	//El siguiente bucle continua mientras la partida no este terminada
 	while(ganador() == No_terminado) {
 		imprimir();
 		puts("Le toca a usted. Escriba coordenadas [x y]");
-		scanf("%i %i\n", &x, &y);
+		scanf("%i %i", &x, &y);
 		//scanf toma la entrada escrita
 		//y la guarda atendiendo al formata en que se escribe en las variables
 
 		//En este bucle se entra si la casilla elegida esta ocupada y no se sale de el hasta que se proporcione una casilla vacia
 		while(tablero[x][y] != Vacio) {
 			puts("Esas coordenadas estan ocupadas");
-			scanf("%i %i\n", &x, &y);
+			scanf("%i %i", &x, &y);
 		}
 
 		tablero[x][y] = X;	//Colocamos ficha
@@ -178,34 +178,38 @@ int main() {
 		pensar(); //La maquina coloca
 	}
 
-	jugador g = ganador();
+	ficha g = ganador();
+
+	puts("---");
+	imprimir();
+	puts("---");
 
 	switch(g) {
-		case Empate: 
-			puts('-------------');
-			puts('Nadie gana!!!');
-			puts('-------------');
+		case Vacio: 
+			puts("-------------");
+			puts("Nadie gana!!!");
+			puts("-------------");
 			break;
 		case X:
-			puts('------------');
-			puts('Enhorabuena!');
-			puts('------------');
+			puts("------------");
+			puts("Enhorabuena!");
+			puts("------------");
 			break;
 		case O:
-			puts('------------');
-			puts('EXTERMINATE!');
-			puts('------------');
+			puts("------------");
+			puts("EXTERMINATE!");
+			puts("------------");
 			break;
 		default:
-			puts('------------');
-			puts('WTF!!!!!!!!!');
-			puts('------------');
+			puts("------------");
+			puts("WTF!!!!!!!!!");
+			puts("------------");
 	}
 
 	return 0;
 }
 
-int ganador()
+ficha ganador()
 {	
 	//Comprobamos diagonal izquierda
 	if (tablero[0][0] == tablero[1][1] && tablero[1][1] == tablero[2][2])
@@ -213,7 +217,7 @@ int ganador()
 		if (tablero[1][1] != 0)
 			return tablero[1][1];
 		else
-			return estado No_terminado;
+			return No_terminado;
 	}
 
 	//Comprobamos diagonal derecha
@@ -222,7 +226,7 @@ int ganador()
 		if (tablero[1][1] != 0)
 			return tablero[1][1];
 		else
-			return estado No_terminado;
+			return No_terminado;
 	}
 	// Comprobamos filas
 	for(int i = 0; i<3; i++)
@@ -251,8 +255,8 @@ int ganador()
 	{
 		for(int j = 0; j<3; j++)
 			if (j == 0)
-				return estado No_terminado;
+				return No_terminado;
 	}
 
-return estado Empate;
+	return Vacio;
 }
